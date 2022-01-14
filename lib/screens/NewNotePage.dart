@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/models/task.dart';
+import 'package:untitled/models/todo.dart';
+import 'dart:developer';
 
 class NewNotePage extends StatefulWidget {
   const NewNotePage({Key? key}) : super(key: key);
@@ -13,6 +16,22 @@ class _NewNotePageState extends State<NewNotePage> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+    TextEditingController titleController = TextEditingController();
+    TextEditingController descriptionController = TextEditingController();
+
+    void _onClickNewTask(int index) {
+      setState(() {
+        var taska = Task('Task 1', 'I have an idea to put in this new task',
+            DateTime.now(), [
+          ToDo('Todo 1', false),
+          ToDo('Todo 2', false),
+        ]);
+
+        Task.listOfTasks.add(taska);
+
+        log('data: $taska');
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -25,12 +44,13 @@ class _NewNotePageState extends State<NewNotePage> {
             child: ListView(
               children: <Widget>[
                 TextFormField(
+                    controller: titleController,
                     keyboardType: TextInputType
                         .emailAddress, // Use email input type for emails.
                     decoration: const InputDecoration(
                         labelText: 'Title', hintText: 'Pie Creation')),
                 TextFormField(
-                    obscureText: true, // Use secure text for passwords.
+                    controller: descriptionController,
                     decoration: const InputDecoration(
                         labelText: 'Description',
                         hintText:
@@ -39,10 +59,10 @@ class _NewNotePageState extends State<NewNotePage> {
                   width: screenSize.width,
                   child: RaisedButton(
                     child: const Text(
-                      'Login',
+                      'Add New Task',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () => null,
+                    onPressed: () => _onClickNewTask,
                     color: Colors.blue,
                   ),
                   margin: EdgeInsets.only(top: 20.0),
