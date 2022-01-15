@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/CalendarPage.dart';
 import 'screens/NotesPage.dart';
+import 'screens/NoteInfo.dart';
 import 'screens/NewNotePage.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       home: MyBottomNavigationBar(),
     );
   }
@@ -27,8 +28,12 @@ class MyBottomNavigationBar extends StatefulWidget {
 }
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  int _currentIndex = 0;
-  final List<Widget> _children = [CalendarPage(), NewNotePage(), NotesPage()];
+  int _currentIndex = 2;
+  final List<Widget> _children = [
+    CalendarPage(),
+    NewNotePage(),
+    NotesPage(),
+  ];
   void onTappedBar(int index) {
     setState(() {
       _currentIndex = index;
@@ -37,19 +42,18 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTappedBar,
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-              icon: new Icon(Icons.calendar_today),
-              title: new Text("Calendar")),
+              icon: Icon(Icons.calendar_today), title: Text("Calendar")),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.add), title: new Text("New Note")),
+              icon: Icon(Icons.add), title: Text("New Note")),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.notes), title: new Text("Notes")),
+              icon: Icon(Icons.notes), title: Text("Notes")),
         ],
       ),
     );

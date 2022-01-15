@@ -1,6 +1,7 @@
 class ToDo {
+  int id;
   String description;
   bool isDone;
 
-  ToDo(this.description, this.isDone);
+  ToDo(this.id, this.description, this.isDone);
 }

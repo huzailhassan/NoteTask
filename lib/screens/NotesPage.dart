@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/models/task.dart';
+import 'package:untitled/screens/NoteInfo.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({Key? key}) : super(key: key);
@@ -15,22 +16,23 @@ class _NotesPageState extends State<NotesPage> {
         appBar: AppBar(
           title: Text("NotesPage Page"),
         ),
-        body: (
-          ListView.builder(
-            // Let the ListView know how many items it needs to build.
-            itemCount: Task.listOfTasks.length,
-            // Provide a builder function. This is where the magic happens.
-            // Convert each item into a widget based on the type of item it is.
-            itemBuilder: (context, index) {
-              final item = Task.listOfTasks[index];
+        body: (ListView.builder(
+          itemCount: Task.listOfTasks.length,
+          itemBuilder: (context, index) {
+            final item = Task.listOfTasks[index];
 
-              return ListTile(
+            return ListTile(
+                leading: const Icon(Icons.note),
                 title: Text(item.name),
                 subtitle: Text(item.description),
-              );
-              
-            },
-          )
-        ));
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const NoteInfo()),
+                  );
+                  NoteInfo.selectedTaskID = 1;
+                });
+          },
+        )));
   }
 }

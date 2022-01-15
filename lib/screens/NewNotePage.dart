@@ -3,6 +3,7 @@ import 'package:untitled/models/task.dart';
 import 'package:untitled/models/todo.dart';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
+import 'dart:math';
 
 class NewNotePage extends StatefulWidget {
   const NewNotePage({Key? key}) : super(key: key);
@@ -15,8 +16,11 @@ class _NewNotePageState extends State<NewNotePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController subTaskController = TextEditingController();
 
-  
+  static List<ToDo> subTasks = [];
+
+  get random => null;
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -28,7 +32,6 @@ class _NewNotePageState extends State<NewNotePage> {
       body: Container(
           padding: const EdgeInsets.all(20.0),
           child: Form(
-            key: _formKey,
             child: ListView(
               children: <Widget>[
                 TextFormField(
@@ -44,17 +47,33 @@ class _NewNotePageState extends State<NewNotePage> {
                         hintText:
                             'i got this nice idea for a new pie to create tonight. Aunt Katie gave me a recipe and I have improved on it by adding more lemon and sugar. I need the following items in this tasks list which I plan to get tommorow. The directions are also in the tasks. ')),
                 TextFormField(
-                    controller: titleController,
+                    controller: subTaskController,
                     keyboardType: TextInputType
                         .emailAddress, // Use email input type for emails.
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: null,
+                        icon: const Icon(Icons.add),
+                        onPressed: () {
+                          var random = Random();
+                          subTasks
+                              .add(ToDo(45366, subTaskController.text, false));
+                        },
                       ),
                       hintText: 'Buy Eggs',
                       labelText: 'Add a SubTask',
                     )),
+                Text("Added subtasks:"),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: subTasks.length,
+                  itemBuilder: (context, index) {
+                    final item = subTasks[index];
+
+                    return ListTile(
+                      title: Text(item.description),
+                    );
+                  },
+                ),
                 Container(
                   width: screenSize.width,
                   child: RaisedButton(
@@ -63,20 +82,19 @@ class _NewNotePageState extends State<NewNotePage> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      var taska = Task(titleController.text,
-                          descriptionController.text, DateTime.now(), [
-                        ToDo('Todo 1', false),
-                        ToDo('Todo 2', false),
-                      ]);
-
-                      print('data: $taska');
-
-                      Task.listOfTasks.add(taska);
+                      var random = Random();
+                      var taska = Task(
+                          random.nextInt(10000),
+                          titleController.text,
+                          descriptionController.text,
+                          DateTime.now(),
+                          subTasks);
+                      Task.push(taska);
                     },
                     color: Colors.blue,
                   ),
                   margin: EdgeInsets.only(top: 20.0),
-                )
+                ),
               ],
             ),
           )),
