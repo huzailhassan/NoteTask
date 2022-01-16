@@ -54,9 +54,12 @@ class _NewNotePageState extends State<NewNotePage> {
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
-                          var random = Random();
-                          subTasks
-                              .add(ToDo(45366, subTaskController.text, false));
+                          setState(() {
+                            var random = Random();
+                            subTasks.add(ToDo(random.nextInt(10000),
+                                subTaskController.text, false));
+                            subTaskController.text = '';
+                          });
                         },
                       ),
                       hintText: 'Buy Eggs',
@@ -64,32 +67,49 @@ class _NewNotePageState extends State<NewNotePage> {
                     )),
                 Text("Added subtasks:"),
                 ListView.builder(
+                  key: UniqueKey(),
                   shrinkWrap: true,
                   itemCount: subTasks.length,
                   itemBuilder: (context, index) {
                     final item = subTasks[index];
 
                     return ListTile(
-                      title: Text(item.description),
-                    );
+                        leading: const Icon(Icons.delete),
+                        title: Text(item.description),
+                        onTap: () {
+                          setState(() {
+                            List<ToDo> newArray = [];
+                            for (var i = 0; i < subTasks.length; i++) {
+                              if (subTasks[i].id != item.id) {
+                                newArray.add(subTasks[i]);
+                              }
+                              subTasks = newArray;
+                            }
+                          });
+                        });
                   },
                 ),
                 Container(
                   width: screenSize.width,
                   child: RaisedButton(
                     child: const Text(
-                      'Add New Task',
+                      'Add Task',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      var random = Random();
-                      var taska = Task(
-                          random.nextInt(10000),
-                          titleController.text,
-                          descriptionController.text,
-                          DateTime.now(),
-                          subTasks);
-                      Task.push(taska);
+                      setState(() {
+                        var random = Random();
+                        var taska = Task(
+                            random.nextInt(10000),
+                            titleController.text,
+                            descriptionController.text,
+                            DateTime.now(),
+                            subTasks);
+                        Task.addTask(taska);
+                        subTasks = [];
+                        titleController.text = '';
+                        descriptionController.text = '';
+                      });
                     },
                     color: Colors.blue,
                   ),

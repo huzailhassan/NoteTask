@@ -28,7 +28,7 @@ class MyBottomNavigationBar extends StatefulWidget {
 }
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  int _currentIndex = 2;
+  int _currentIndex = 1;
   final List<Widget> _children = [
     CalendarPage(),
     NewNotePage(),

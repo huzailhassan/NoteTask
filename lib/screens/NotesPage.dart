@@ -13,10 +13,12 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: UniqueKey(),
         appBar: AppBar(
           title: Text("NotesPage Page"),
         ),
         body: (ListView.builder(
+          key: UniqueKey(),
           itemCount: Task.listOfTasks.length,
           itemBuilder: (context, index) {
             final item = Task.listOfTasks[index];
@@ -26,11 +28,13 @@ class _NotesPageState extends State<NotesPage> {
                 title: Text(item.name),
                 subtitle: Text(item.description),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const NoteInfo()),
-                  );
-                  NoteInfo.selectedTaskID = 1;
+                  setState(() {
+                    NoteInfo.selectedTask = item;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const NoteInfo()),
+                    );
+                  });
                 });
           },
         )));

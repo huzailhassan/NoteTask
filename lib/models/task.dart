@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'todo.dart';
 
 class Task {
@@ -22,11 +24,62 @@ class Task {
     ])
   ];
 
-  static push(Task task) {
+// Task
+  static addTask(Task task) {
     listOfTasks.add(task);
   }
 
-  void delete(Task task) {
-    // for loop
+  static void deleteTask(id) {
+    List<Task> newArray = [];
+    for (var i = 0; i < listOfTasks.length; i++) {
+      if (listOfTasks[i].id != id) {
+        newArray.add(listOfTasks[i]);
+      }
+    }
+    Task.listOfTasks = newArray;
   }
+
+  static void changeToDone(taskID, todoID) {
+    for (var i = 0; i < listOfTasks.length; i++) {
+      if (listOfTasks[i].id == taskID) {
+        for (var j = 0; j < listOfTasks[i].todos.length; j++) {
+          if (listOfTasks[i].todos[j].id == todoID) {
+            listOfTasks[i].todos[j].isDone = !listOfTasks[i].todos[j].isDone;
+          }
+        }
+      }
+    }
+  }
+
+  static changeDescription(taskID, newName, newDescription) {
+    for (var i = 0; i < listOfTasks.length; i++) {
+      if (listOfTasks[i].id == taskID) {
+        listOfTasks[i].name = newName;
+        listOfTasks[i].description = newDescription;
+      }
+    }
+  }
+
+// ToDo
+  static addToDo(id, String newTask) {
+    print(newTask);
+    var random = Random();
+    var newTask2 = ToDo(random.nextInt(10000), newTask, false);
+    for (var i = 0; i < listOfTasks.length; i++) {
+      if (listOfTasks[i].id == id) {
+        listOfTasks[i].todos.add(newTask2);
+      }
+    }
+  }
+
+  static deleteToDo(id, newTask) {
+    List<Task> newArray = [];
+    for (var i = 0; i < listOfTasks.length; i++) {
+      if (listOfTasks[i].id != id) {
+        newArray.add(listOfTasks[i]);
+      }
+    }
+    listOfTasks = newArray;
+  }
+
 }
