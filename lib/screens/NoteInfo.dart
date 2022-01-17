@@ -28,13 +28,14 @@ class _NoteInfoState extends State<NoteInfo> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
-                    title: Text('Change Name'),
+                    title: Text('Change Description'),
                     content: TextField(
                       controller: descriptionController,
                       onChanged: (value) {},
                       decoration: InputDecoration(
                           hintText: NoteInfo.selectedTask.description),
                     ),
+                    
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -46,7 +47,7 @@ class _NoteInfoState extends State<NoteInfo> {
                             Navigator.pop(context, 'OK');
                             Task.changeDescription(
                                 NoteInfo.selectedTask.id,
-                                nameController.text,
+                                NoteInfo.selectedTask.name,
                                 descriptionController.text);
                           }),
                         },
@@ -68,6 +69,11 @@ class _NoteInfoState extends State<NoteInfo> {
             child: ListView(
               children: <Widget>[
                 Text(NoteInfo.selectedTask.description),
+                Text(findAmountofFinishedTasks().toString() +
+                    ' / ' +
+                    NoteInfo.selectedTask.todos.length.toString() +
+                    ' todos complete'),
+                Text('Long press to delete task'),
                 ListView.builder(
                   key: UniqueKey(),
                   shrinkWrap: true,
@@ -77,9 +83,15 @@ class _NoteInfoState extends State<NoteInfo> {
 
                     return ListTile(
                         leading: Icon(item.isDone
-                            ? Icons.check_box_outline_blank_outlined
-                            : Icons.check_box_outlined),
+                            ? Icons.check_box_outlined
+                            : Icons.check_box_outline_blank_outlined),
                         title: Text(item.description),
+                        onLongPress: () {
+                          setState(() {
+                            Task.deleteToDo(
+                                NoteInfo.selectedTask.id, item.id);
+                          });
+                        },
                         onTap: () {
                           setState(() {
                             Task.changeToDone(
@@ -147,5 +159,15 @@ class _NoteInfoState extends State<NoteInfo> {
             ),
           )),
     );
+  }
+
+  findAmountofFinishedTasks() {
+    int finished = 0;
+    for (var i = 0; i < NoteInfo.selectedTask.todos.length; i++) {
+      if (NoteInfo.selectedTask.todos[i].isDone == true) {
+        finished++;
+      }
+    }
+    return finished;
   }
 }

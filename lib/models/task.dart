@@ -7,7 +7,7 @@ class Task {
   String name;
   String description;
   DateTime date = DateTime.now();
-  final List<ToDo> todos;
+  List<ToDo> todos;
 
   Task(this.id, this.name, this.description, this.date, this.todos);
 
@@ -72,14 +72,18 @@ class Task {
     }
   }
 
-  static deleteToDo(id, newTask) {
-    List<Task> newArray = [];
-    for (var i = 0; i < listOfTasks.length; i++) {
-      if (listOfTasks[i].id != id) {
-        newArray.add(listOfTasks[i]);
+  static deleteToDo(taskID, itemID) {
+    
+    List<ToDo> newArray = [];
+    for (var i = 0; i < listOfTasks.length + 1; i++) {
+      if (listOfTasks[i].id == taskID) {
+        for (var j = 0; j < listOfTasks[i].todos.length; j++) {
+          if (listOfTasks[i].todos[j].id != itemID) {
+            newArray.add(listOfTasks[i].todos[j]);
+          }
+        }
+        listOfTasks[i].todos = newArray;
       }
     }
-    listOfTasks = newArray;
   }
-
 }

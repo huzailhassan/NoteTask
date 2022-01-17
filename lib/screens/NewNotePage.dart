@@ -36,11 +36,11 @@ class _NewNotePageState extends State<NewNotePage> {
               children: <Widget>[
                 TextFormField(
                     controller: titleController,
-                    keyboardType: TextInputType
-                        .emailAddress, // Use email input type for emails.
                     decoration: const InputDecoration(
                         labelText: 'Title', hintText: 'Pie Creation')),
                 TextFormField(
+                    maxLines: 10,
+                    minLines: 1,
                     controller: descriptionController,
                     decoration: const InputDecoration(
                         labelText: 'Description',
@@ -83,8 +83,8 @@ class _NewNotePageState extends State<NewNotePage> {
                               if (subTasks[i].id != item.id) {
                                 newArray.add(subTasks[i]);
                               }
-                              subTasks = newArray;
                             }
+                            subTasks = newArray;
                           });
                         });
                   },
