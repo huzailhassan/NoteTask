@@ -6,10 +6,10 @@ class Task {
   int id;
   String name;
   String description;
-  DateTime date = DateTime.now();
+  DateTime date;
   List<ToDo> todos;
 
-  Task(this.id, this.name, this.description, this.date, this.todos);
+  Task(this.id, this.name, this.description, this.date, this.todos, {title});
 
   static List<Task> listOfTasks = [
     Task(13004, 'Task 1', 'I have an idea to put in this new task',

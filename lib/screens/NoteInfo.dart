@@ -35,7 +35,6 @@ class _NoteInfoState extends State<NoteInfo> {
                       decoration: InputDecoration(
                           hintText: NoteInfo.selectedTask.description),
                     ),
-                    
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -73,6 +72,8 @@ class _NoteInfoState extends State<NoteInfo> {
                     ' / ' +
                     NoteInfo.selectedTask.todos.length.toString() +
                     ' todos complete'),
+                Text(NoteInfo.selectedTask.description),
+                Text('Created on ' + NoteInfo.selectedTask.date.toString()),
                 Text('Long press to delete task'),
                 ListView.builder(
                   key: UniqueKey(),
@@ -88,8 +89,7 @@ class _NoteInfoState extends State<NoteInfo> {
                         title: Text(item.description),
                         onLongPress: () {
                           setState(() {
-                            Task.deleteToDo(
-                                NoteInfo.selectedTask.id, item.id);
+                            Task.deleteToDo(NoteInfo.selectedTask.id, item.id);
                           });
                         },
                         onTap: () {
@@ -110,7 +110,7 @@ class _NoteInfoState extends State<NoteInfo> {
                     onPressed: () => showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: Text('Add Subtask'),
+                        title: Text(NoteInfo.selectedTask.date.toString()),
                         content: TextField(
                           controller: toDoController,
                           decoration: InputDecoration(
