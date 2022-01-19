@@ -4,6 +4,7 @@ import 'package:untitled/models/todo.dart';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'dart:math';
+import 'package:intl/intl.dart';
 
 class NewNotePage extends StatefulWidget {
   const NewNotePage({Key? key}) : super(key: key);
@@ -103,7 +104,7 @@ class _NewNotePageState extends State<NewNotePage> {
                             random.nextInt(10000),
                             titleController.text,
                             descriptionController.text,
-                            DateTime.now(),
+                            DateTime.parse("2022-01-19 00:00:00.000Z"),
                             subTasks);
                         Task.addTask(taska);
                         subTasks = [];

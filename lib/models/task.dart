@@ -13,12 +13,12 @@ class Task {
 
   static List<Task> listOfTasks = [
     Task(13004, 'Task 1', 'I have an idea to put in this new task',
-        DateTime.now(), [
+        DateTime.parse("2022-01-10 00:00:00.000Z"), [
       ToDo(34443, 'Todo 1', false),
       ToDo(45666, 'Todo 2', false),
     ]),
     Task(55002, 'Task 2', 'I have an idea to put in this new task',
-        DateTime.now(), [
+        DateTime.parse("2022-01-08 00:00:00.000Z"), [
       ToDo(34443, 'Todo 3', false),
       ToDo(24666, 'Todo 4', false),
     ])
