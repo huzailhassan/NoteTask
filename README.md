@@ -11,4 +11,4 @@ third feature would be the calendar. You can see all your notes and tasks in the
 
 ## Getting Started
 
-Run using 'flutter run --no-sound-null-safety'
+Run using 'flutter run'
