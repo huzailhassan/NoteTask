@@ -28,7 +28,7 @@ class _NoteInfoState extends State<NoteInfo> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
-                    title: Text('Change Description'),
+                    title: const Text('Change Description'),
                     content: TextField(
                       controller: descriptionController,
                       onChanged: (value) {},
@@ -110,10 +110,10 @@ class _NoteInfoState extends State<NoteInfo> {
                     onPressed: () => showDialog<String>(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: Text(NoteInfo.selectedTask.date.toString()),
+                        title: const Text('Add New subtask'),
                         content: TextField(
                           controller: toDoController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: 'Step One: Set Oven to 365 degrees'),
                         ),
                         actions: <Widget>[

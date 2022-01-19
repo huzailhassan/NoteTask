@@ -94,7 +94,7 @@ class _NewNotePageState extends State<NewNotePage> {
                   width: screenSize.width,
                   child: RaisedButton(
                     child: const Text(
-                      'Add Task',
+                      'Add Tasklet',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {

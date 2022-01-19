@@ -15,7 +15,7 @@ class _NotesPageState extends State<NotesPage> {
     return Scaffold(
         key: UniqueKey(),
         appBar: AppBar(
-          title: Text("NotesPage Page"),
+          title: Text("Notelets"),
         ),
         body: (ListView.builder(
           key: UniqueKey(),

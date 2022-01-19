@@ -24,6 +24,7 @@ class Task {
     ])
   ];
 
+// CRUD OPERATIONS
 // Task
   static addTask(Task task) {
     listOfTasks.add(task);
@@ -73,7 +74,6 @@ class Task {
   }
 
   static deleteToDo(taskID, itemID) {
-    
     List<ToDo> newArray = [];
     for (var i = 0; i < listOfTasks.length + 1; i++) {
       if (listOfTasks[i].id == taskID) {

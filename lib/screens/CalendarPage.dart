@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:untitled/screens/NoteInfo.dart';
-import 'package:untitled/screens/event.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:untitled/models/task.dart';
@@ -17,23 +16,17 @@ class _CalendarState extends State<Calendar> {
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
 
-  TextEditingController _eventController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
     selectedEvents[Task.listOfTasks[0].date] = [Task.listOfTasks[0]];
 
     for (var i = 1; i < Task.listOfTasks.length; i++) {
-      // print(DateTime.now());
-      // var temp = Task.listOfTasks[i].date.toString;
-      // selectedEvents[DateTime.now()] = Task.listOfTasks![i];
-      // print(selectedEvents);
-
       selectedEvents[Task.listOfTasks[i].date] = [Task.listOfTasks[i]];
     }
     print(selectedEvents);
-
-    // super.initState();
   }
 
   List<Task> _getEventsfromDay(DateTime date) {
@@ -42,7 +35,9 @@ class _CalendarState extends State<Calendar> {
 
   @override
   void dispose() {
-    _eventController.dispose();
+    _descriptionController.dispose();
+
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -50,15 +45,14 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ESTech Calendar"),
-        centerTitle: true,
+        title: Text("Calendar"),
       ),
       body: Column(
         children: [
           TableCalendar(
             focusedDay: selectedDay,
-            firstDay: DateTime(1990),
-            lastDay: DateTime(2050),
+            firstDay: DateTime(2000),
+            lastDay: DateTime(2025),
             calendarFormat: format,
             onFormatChanged: (CalendarFormat _format) {
               setState(() {
@@ -68,7 +62,6 @@ class _CalendarState extends State<Calendar> {
             startingDayOfWeek: StartingDayOfWeek.sunday,
             daysOfWeekVisible: true,
 
-            //Day Changed
             onDaySelected: (DateTime selectDay, DateTime focusDay) {
               setState(() {
                 selectedDay = selectDay;
@@ -82,7 +75,6 @@ class _CalendarState extends State<Calendar> {
 
             eventLoader: _getEventsfromDay,
 
-            //To style the Calendar
             calendarStyle: CalendarStyle(
               isTodayHighlighted: true,
               selectedDecoration: BoxDecoration(
@@ -90,9 +82,9 @@ class _CalendarState extends State<Calendar> {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              selectedTextStyle: TextStyle(color: Colors.white),
+              selectedTextStyle: const TextStyle(color: Colors.white),
               todayDecoration: BoxDecoration(
-                color: Colors.purpleAccent,
+                color: Colors.orange,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(5.0),
               ),
@@ -113,17 +105,26 @@ class _CalendarState extends State<Calendar> {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              formatButtonTextStyle: TextStyle(
+              formatButtonTextStyle: const TextStyle(
                 color: Colors.white,
               ),
             ),
           ),
           ..._getEventsfromDay(selectedDay).map(
             (Task event) => ListTile(
-              title: Text(
-                event.name,
-              ),
-            ),
+                title: Text(
+                  event.name,
+                ),
+                subtitle: Text(event.description),
+                onTap: () {
+                  setState(() {
+                    NoteInfo.selectedTask = event;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const NoteInfo()),
+                    );
+                  });
+                }),
           ),
         ],
       ),
@@ -131,9 +132,9 @@ class _CalendarState extends State<Calendar> {
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text("Add Event"),
+            title: const Text("Add Tasklet"),
             content: TextFormField(
-              controller: _eventController,
+              controller: _descriptionController,
             ),
             actions: [
               TextButton(
@@ -145,30 +146,43 @@ class _CalendarState extends State<Calendar> {
                 onPressed: () {
                   var random = Random();
 
-                  if (_eventController.text.isEmpty) {
+                  if (_descriptionController.text.isEmpty) {
                   } else {
                     if (selectedEvents[selectedDay] != null) {
                       selectedEvents[selectedDay]?.add(
-                        Task(random.nextInt(10000), _eventController.text,
-                            'shit', DateTime.now(), []),
+                        Task(
+                            random.nextInt(10000),
+                            'New Tasklet' ,
+                            _descriptionController.text,
+                            DateTime.parse("2022-01-19 00:00:00.000Z"), []),
                       );
                       Task.listOfTasks.add(
-                        Task(random.nextInt(10000), _eventController.text,
-                            'shit', DateTime.now(), []),
+                        Task(
+                            random.nextInt(10000),
+                            'New Tasklet',
+                            _descriptionController.text,
+                            DateTime.parse("2022-01-19 00:00:00.000Z"), []),
                       );
                     } else {
                       selectedEvents[selectedDay] = [
-                        Task(random.nextInt(10000), _eventController.text,
-                            'shit', DateTime.now(), [])
+                        Task(
+                            random.nextInt(10000),
+                            'New Tasklet',
+                            _descriptionController.text,
+                            DateTime.parse("2022-01-19 00:00:00.000Z"), [])
                       ];
                       Task.listOfTasks.add(
-                        Task(random.nextInt(10000), _eventController.text,
-                            'shit', DateTime.now(), []),
+                        Task(
+                            random.nextInt(10000),
+                            'New Tasklet',
+                            _descriptionController.text,
+                            DateTime.parse("2022-01-19 00:00:00.000Z"), []),
                       );
                     }
                   }
                   Navigator.pop(context);
-                  _eventController.clear();
+                  _nameController.clear();
+                  _descriptionController.clear();
                   setState(() {});
                   return;
                 },
@@ -176,7 +190,7 @@ class _CalendarState extends State<Calendar> {
             ],
           ),
         ),
-        label: Text("Add Event"),
+        label: Text("Add Tasklet"),
         icon: Icon(Icons.add),
       ),
     );

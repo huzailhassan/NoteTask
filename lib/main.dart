@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'screens/CalendarPage.dart';
 import 'screens/NotesPage.dart';
-import 'screens/NoteInfo.dart';
 import 'screens/NewNotePage.dart';
 
 void main() {
