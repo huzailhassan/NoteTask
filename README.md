@@ -1,5 +1,7 @@
 # NoteTask
-
+# Type: Solo Project
+# Stack: Dart/Flutter
+# Platform: Android, iOS, Windows, Web
 
 I always have an idea for tasks I would like to do later such as grocery shopping or a coding 
 project. I usually enter the ideas or whatever I need into a notetaking app, but it get’s messy 
@@ -8,7 +10,3 @@ My project’s name is ‘NoteTask’. Basically This app will consist of three 
 the main one and that is the notepad. But this has two integrated components. The second is 
 the tasks feature with a reminder function. You can easily add tasks within the notepad. The 
 third feature would be the calendar. You can see all your notes and tasks in the calendar. 
-
-## Getting Started
-
-Run using 'flutter run'
