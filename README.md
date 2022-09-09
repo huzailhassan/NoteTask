@@ -1,6 +1,6 @@
 # NoteTask
 Type: Solo Project <br>
-Stack: Dart/Flutter <br>
+Stack: Dart/Flutter (Full Stack) <br>
 Platform: Android, iOS, Windows, Web <br>
 
 I always have an idea for tasks I would like to do later such as grocery shopping or a coding 
