@@ -1,7 +1,7 @@
 # NoteTask
-# Type: Solo Project
-# Stack: Dart/Flutter
-# Platform: Android, iOS, Windows, Web
+Type: Solo Project
+Stack: Dart/Flutter
+Platform: Android, iOS, Windows, Web
 
 I always have an idea for tasks I would like to do later such as grocery shopping or a coding 
 project. I usually enter the ideas or whatever I need into a notetaking app, but it get’s messy 
